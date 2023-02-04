@@ -1,9 +1,9 @@
 ///Create subsets of the data for further analysis
 ///Created: January 28, 2023
-///Modified: January 28, 2023
+///Modified: February 3, 2023
 
 use "$prepped_data/full_dataset", clear
-drop code gicssubindustry pledge_strength ccpi_policy_overall ccpi_policy_national ccpi_policy_international
+drop code gicssubindustry pledge_strength ccpi_policy_national ccpi_policy_international
 
 //Subset 1: Unaggregated with all firms 
 preserve 
@@ -30,12 +30,12 @@ preserve
 drop environmental_intensity_sales
 
 collapse (mean) tot_environmental_cost tot_sales, ///
-	by(country year ccpi_overall ccpi_policy_score eff_estimate reg_estimate ghg gdp pop pledge_strong)
+	by(country year ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong)
 
 gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 
 order country year environmental_intensity_sales tot_environmental_cost tot_sales ///
-	ccpi_overall ccpi_policy_score eff_estimate reg_estimate ghg gdp pop pledge_strong
+	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
 	save "$prepped_data/sub4_agg_all", replace
 restore
@@ -47,12 +47,12 @@ keep if (environmental_intensity_sales < 0) | (environmental_intensity_sales == 
 drop environmental_intensity_sales
 
 collapse (mean) tot_environmental_cost tot_sales, ///
-	by(country year ccpi_overall ccpi_policy_score eff_estimate reg_estimate ghg gdp pop pledge_strong)
+	by(country year ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong)
 
 gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 
 order country year environmental_intensity_sales tot_environmental_cost tot_sales ///
-	ccpi_overall ccpi_policy_score eff_estimate reg_estimate ghg gdp pop pledge_strong
+	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
 save "$prepped_data/sub5_agg_neg_dropobs", replace
 restore
@@ -66,12 +66,24 @@ drop anypos
 drop environmental_intensity_sales
 
 collapse (mean) tot_environmental_cost tot_sales, ///
-	by(country year ccpi_overall ccpi_policy_score eff_estimate reg_estimate ghg gdp pop pledge_strong)
+	by(country year ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong)
 
 gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 
 order country year environmental_intensity_sales tot_environmental_cost tot_sales ///
-	ccpi_overall ccpi_policy_score eff_estimate reg_estimate ghg gdp pop pledge_strong
+	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
 save "$prepped_data/sub6_agg_neg_dropfirms", replace
 restore
+
+//Additional changes for all subsets
+foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_neg_dropfirms.dta" /// 
+	"sub4_agg_all.dta" "sub5_agg_neg_dropobs.dta" "sub6_agg_neg_dropfirms.dta" {
+		
+		use "$prepped_data/`file'", clear
+		gen ln_ghg = ln(ghg)
+		gen ln_gdp = ln(gdp)
+		gen ln_pop = ln(pop)
+		
+		save "$prepped_data/`file'", replace
+	}
