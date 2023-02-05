@@ -1,6 +1,6 @@
 ///Additional tables and figures
 ///Created: February 3, 2023
-///Modified: February 3, 2023
+///Modified: February 5, 2023
 
 /*
 Create:
@@ -49,9 +49,31 @@ keep (environmental_intensity_sales eff_estimate ln_ghg ln_gdp ln_pop ccpi_overa
 orth_out environmental_intensity_sales eff_estimate ln_ghg ln_gdp ln_pop ccpi_overall policy_level ///
  using "$output/sub4sum_compare.xls", by(pledge_strong) replace overall se count compare test ///
  title("Comparison by Pledge Strength")
- 
+	   
 //Map of countries by pledge strength
+*Countries in analysis
+use "$prepped_data/full_dataset", clear
+keep country pledge_strength pledge_strong
+duplicates drop
 
+replace pledge_strength = "No pledge" if pledge_strength == "no_pledge"
+replace pledge_strength = "Insufficient" if pledge_strength == "insufficient"
+replace pledge_strength = "Partially Sufficient" if pledge_strength == "partially_sufficient"
+replace pledge_strength = "Sufficient" if pledge_strength == "sufficient"
+
+export excel using "$output/pledges.xlsx", replace firstrow(variables) 
+
+*All Countries
+use "$temp/pledge", clear
+replace pledge_strength = "No pledge" if pledge_strength == "no_pledge"
+replace pledge_strength = "Insufficient" if pledge_strength == "insufficient"
+replace pledge_strength = "Partially Insufficient" if pledge_strength == "partially_insufficient"
+replace pledge_strength = "Partially Sufficient" if pledge_strength == "partially_sufficient"
+replace pledge_strength = "Sufficient" if pledge_strength == "sufficient"
+
+export excel using "$output/pledges_all.xlsx", replace firstrow(variables) 
+
+*See Tableau files
 
 //Diff in diff graphs 
 *Collapse so companies have weight proportional to size

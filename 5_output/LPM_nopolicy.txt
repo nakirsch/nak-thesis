@@ -1,0 +1,19 @@
+	(1)	(2)	(3)
+	sub4_agg_all.dta	sub5_agg_neg_dropobs.dta	sub6_agg_neg_dropfirms.dta
+VARIABLES	pledge_strong	pledge_strong	pledge_strong
+			
+eff_estimate	0.149	0.149	0.155
+	(0.158)	(0.158)	(0.157)
+ln_ghg	-0.148***	-0.148***	-0.143***
+	(0.040)	(0.040)	(0.041)
+ln_gdp	0.205	0.205	0.202
+	(0.131)	(0.131)	(0.130)
+ln_pop	-0.087	-0.087	-0.083
+	(0.087)	(0.087)	(0.086)
+Constant	-1.772	-1.772	-1.836
+	(1.717)	(1.717)	(1.736)
+			
+Observations	61	61	60
+R-squared	0.408	0.408	0.401
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			

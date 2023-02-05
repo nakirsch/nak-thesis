@@ -1,0 +1,13 @@
+	(1)	(2)	(3)
+	sub4_agg_all.dta	sub5_agg_neg_dropobs.dta	sub6_agg_neg_dropfirms.dta
+VARIABLES	pledge_strong	pledge_strong	pledge_strong
+			
+ccpi_overall	0.017***	0.017***	0.017***
+	(0.006)	(0.006)	(0.006)
+Constant	-0.301	-0.301	-0.288
+	(0.368)	(0.368)	(0.368)
+			
+Observations	47	47	46
+R-squared	0.120	0.120	0.116
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			
