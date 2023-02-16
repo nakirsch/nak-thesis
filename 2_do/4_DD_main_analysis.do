@@ -1,6 +1,6 @@
 ///Diff-in-diff to examine impact of pledges on firm-level emissions
 ///Created: February 3, 2023
-///Modified: February 3, 2023
+///Modified: February 8, 2023
 
 /*
 The Paris Agreement is a legally binding international treaty on climate change. It was adopted by 196 Parties at COP 21 in Paris, on 12 December 2015 and entered into force on 4 November 2016.
@@ -26,7 +26,7 @@ Impact = B0 + B1post + B2strong + B3post*strong
 use "$prepped_data/sub1_unagg_all.dta", clear
 
 //Organize years
-drop if year == 2016
+*drop if year == 2016
 gen post = 0 
 replace post = 1 if year > 2016
 
@@ -64,7 +64,7 @@ xtreg environmental_intensity_sales post pledge_strong postxstrong ///
 use "$prepped_data/sub4_agg_all.dta", clear
 
 //Organize years
-drop if year == 2016
+*drop if year == 2016
 gen post = 0 
 replace post = 1 if year > 2016
 

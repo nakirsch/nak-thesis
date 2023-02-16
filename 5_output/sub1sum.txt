@@ -1,0 +1,11 @@
+	(1)	(2)	(3)	(4)	(5)
+VARIABLES	N	mean	sd	min	max
+					
+environmental_intensity_sales	13,491	-11.30	27.70	-199.3	190.4
+ccpi_overall	23,304	52.11	11.56	8.820	77.76
+eff_estimate	24,010	1.229	0.638	-0.871	2.236
+ln_ghg	24,010	13.74	1.577	7.539	16.36
+ln_gdp	24,010	28.49	1.398	22.92	30.69
+ln_pop	24,010	18.12	1.462	12.93	21.07
+policy_level	4,616	2.479	1.202	1	4
+					
