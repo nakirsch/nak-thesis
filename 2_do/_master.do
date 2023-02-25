@@ -21,15 +21,16 @@ global output "$wd/5_output"
 global switch_1 "off"
 global switch_2 "off"
 global switch_3 "off"
+global switch_4 "off"
 
 *Analysis
-global switch_4 "off"
 global switch_5 "off"
 global switch_6 "off"
 global switch_7 "off"
+global switch_8 "off"
 
 *Visuals
-global switch_8 "off"
+global switch_9 "off"
 
 ///Run files
 if "$switch_1" == "on" {
@@ -45,21 +46,25 @@ if "$switch_3" == "on" {
 }
 
 if "$switch_4" == "on" {
-	do "$do_files/4_dd_main_analysis.do"
+	do "$do_files/4_clean_subsets.do"
 }
 
 if "$switch_5" == "on" {
-	do "$do_files/5_ols_pretrends_analysis.do"
+	do "$do_files/5_dd_main_analysis.do"
 }
 
 if "$switch_6" == "on" {
-	do "$do_files/6_lpm_pledge_analysis.do"
+	do "$do_files/6_ols_pretrends_analysis.do"
 }
 
 if "$switch_7" == "on" {
-	do "$do_files/7_first-diff_policy_analysis.do"
+	do "$do_files/7_lpm_pledge_analysis.do"
 }
 
 if "$switch_8" == "on" {
-	do "$do_files/8_tables_figures.do"
+	do "$do_files/8_first-diff_policy_analysis.do"
+}
+
+if "$switch_9" == "on" {
+	do "$do_files/9_tables_figures.do"
 }

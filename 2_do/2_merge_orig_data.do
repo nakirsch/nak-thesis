@@ -1,6 +1,6 @@
 ///Merge cleaned datasets to create full_dataset
 ///Created: November 11, 2022
-///Modified: January 28, 2023
+///Modified: February 25, 2023
 
 /*
 Corrections for Hong Kong and Macao
@@ -75,4 +75,10 @@ gen pledge_strong = 0
 replace pledge_strong = 1 if pledge_strength == "partially_sufficient"
 replace pledge_strong = 1 if pledge_strength == "sufficient"
 
+//Add in world bank regions 
+merge m:1 country using "$temp/WB_regions"
+order region, a(country)
+drop _merge
+
 save "$prepped_data/full_dataset", replace
+

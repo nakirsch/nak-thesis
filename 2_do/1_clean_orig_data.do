@@ -1,6 +1,6 @@
 ///Clean original datasets to prepare them for merging
 ///Created: November 11, 2022
-///Modified: January 28, 2023
+///Modified: February 25, 2023
 
 ///Harvard Business School Impact-Weighted Accounts
 
@@ -314,3 +314,12 @@ foreach v in "gdp" "ghg" "pop" {
 	reshape long `v', i(country code) j(year)
 	save "$temp/worldbank_`v'_long", replace
 }
+
+///World Bank Regions 
+/*
+Regions from the World Bank, found at:
+https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups
+*/
+
+import excel "$orig_data/WB_regions.xlsx", firstrow allstring clear
+save "$temp/WB_regions", replace
