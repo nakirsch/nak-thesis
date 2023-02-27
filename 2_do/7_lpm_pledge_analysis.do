@@ -3,7 +3,7 @@
 ///Modified: February 25, 2023
 
 /*
-pledge = B0 + (B1policy) + B2governance + B1GHG + B3GDP + B4pop 
+pledge = B0 + B1governance + B2GHG + B3GDP + B4pop 
 		 + error
 
 pledge = B0 + B1CCPI

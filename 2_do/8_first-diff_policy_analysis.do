@@ -1,9 +1,9 @@
-///First difference to examine impact of policy change on corporate emissions
+///First difference to examine impact of policy change on corporations' intensity of production
 ///Created: February 3, 2023
 ///Modified: February 25, 2023
 
 /*
-Δemissions = B0 + B1Δpolicy + B2Δgovernance + B3ΔGDP + B4Δpop 
+Δintensity = B0 + B1Δpolicy + B2Δgovernance + B3ΔGDP + B4Δpop 
 		 + error
 */
 

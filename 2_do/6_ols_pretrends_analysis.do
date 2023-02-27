@@ -1,10 +1,10 @@
-///OLS to examine pretrends for difference in emissions by countries' pledge strength
+///OLS to examine pretrends for difference in intensity by countries' pledge strength
 ///Created: February 3, 2023
 ///Modified: February 25, 2023
 
 /*
-emissions = B0 + B1pledge + 
-            + B2X (X = (policy), governance, GDP, pop)
+Intensity = B0 + B1pledge + 
+            + B2X (X = governance, GDP, pop)
 			+ year fes
 			+ error
 */
@@ -24,11 +24,11 @@ foreach file in "ols_sub1_unagg_all.dta" "ols_sub2_unagg_neg_dropobs.dta" ///
 	"ols_sub5_agg_neg_dropobs.dta" "ols_sub6_agg_neg_dropfirms.dta" {
 
 	use "$prepped_data/`file'", clear
-
+	
 	//Run without fes
 	reg environmental_intensity_sales pledge_strong eff_estimate ln_gdp ln_pop, cluster(region)
 	
-	if "`file'" == "sub1_unagg_all.dta" {
+	if "`file'" == "ols_sub1_unagg_all.dta" {
 		outreg2 using "$output/OLS_.xls", replace dec(3) cttop(`file')
 	}
 	else {
@@ -41,9 +41,9 @@ foreach file in "ols_sub1_unagg_all.dta" "ols_sub2_unagg_neg_dropobs.dta" ///
 	order yearcode, a(year)
 	
 	reghdfe environmental_intensity_sales pledge_strong eff_estimate ln_gdp ln_pop ///
-			, a(yearcode) cluster(region)
+			, cluster(region) a(yearcode)
 
-	if "`file'" == "sub1_unagg_all.dta" {
+	if "`file'" == "ols_sub1_unagg_all.dta" {
 		outreg2 using "$output/OLS_fe.xls", replace dec(3) cttop(`file')
 	}
 	else {

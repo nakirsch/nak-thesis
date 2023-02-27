@@ -2,16 +2,16 @@
 	ols_sub1_unagg_all.dta	ols_sub2_unagg_neg_dropobs.dta	ols_sub3_unagg_neg_dropfirms.dta	ols_sub4_agg_all.dta	ols_sub5_agg_neg_dropobs.dta	ols_sub6_agg_neg_dropfirms.dta
 VARIABLES	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales
 						
-pledge_strong	6.505***	6.899***	6.663***	-11.404	-13.372	-11.904
-	(1.155)	(1.239)	(1.282)	(8.078)	(8.918)	(7.980)
-eff_estimate	2.765	3.365	3.224	7.841	8.049	7.965
-	(4.249)	(4.250)	(4.256)	(10.305)	(10.570)	(10.330)
-ln_gdp	0.646	0.067	0.621	3.610	3.669	3.342
-	(2.504)	(2.368)	(2.324)	(3.421)	(3.265)	(3.486)
-ln_pop	0.370	1.046	0.617	0.825	0.559	0.825
-	(2.144)	(1.950)	(1.911)	(4.990)	(4.631)	(5.124)
-Constant	-43.834	-41.437	-49.122	-128.896**	-126.116**	-122.662**
-	(28.969)	(28.851)	(28.188)	(40.827)	(44.501)	(41.786)
+pledge_strong	0.065***	0.069***	0.067***	-0.114	-0.134	-0.119
+	(0.012)	(0.012)	(0.013)	(0.081)	(0.089)	(0.080)
+eff_estimate	0.028	0.034	0.032	0.078	0.080	0.080
+	(0.042)	(0.043)	(0.043)	(0.103)	(0.106)	(0.103)
+ln_gdp	0.006	0.001	0.006	0.036	0.037	0.033
+	(0.025)	(0.024)	(0.023)	(0.034)	(0.033)	(0.035)
+ln_pop	0.004	0.010	0.006	0.008	0.006	0.008
+	(0.021)	(0.019)	(0.019)	(0.050)	(0.046)	(0.051)
+Constant	-0.438	-0.414	-0.491	-1.289**	-1.261**	-1.227**
+	(0.290)	(0.289)	(0.282)	(0.408)	(0.445)	(0.418)
 						
 Observations	5,821	5,648	5,410	234	234	233
 R-squared	0.021	0.023	0.025	0.081	0.081	0.071

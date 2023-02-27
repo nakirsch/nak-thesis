@@ -70,6 +70,7 @@ sort country company year
 *Clean intensity and cost variables, create sales variable
 replace environmental_intensity_sales = subinstr(environmental_intensity_sales, "%", "", .) 
 destring environmental_intensity_sales, replace
+replace environmental_intensity_sales = environmental_intensity_sales/100
 
 replace tot_environmental_cost = subinstr(tot_environmental_cost, ",", "", .) 
 replace tot_environmental_cost = subinstr(tot_environmental_cost, "$", "", .) 

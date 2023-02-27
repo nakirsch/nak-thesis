@@ -1,4 +1,4 @@
-///Diff-in-diff to examine impact of pledges on firm-level emissions
+///Diff-in-diff to examine impact of pledges on firm-level intensity of production
 ///Created: February 3, 2023
 ///Modified: February 25, 2023
 
@@ -16,8 +16,8 @@ https://treaties.un.org/doc/Publication/CN/2016/CN.735.2016-Eng.pdf
 */
 
 /*
-Impact = B0 + B1post + B2strong + B3post*strong
-		 + B4X (X = policy, governance, GDP, GHG, pop)
+Intensity = B0 + B1post + B2strong + B3post*strong
+		 + B4X (X = governance, GDP, pop)
 		(+ country fixed effects, year fixed effects)
 		 + Error
 */
@@ -37,8 +37,8 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 		eff_estimate ln_gdp ln_pop, cluster(region)
 	outreg2 using "$output/DD_`file'.xls", dec(3)
 
-	if ("`file'" == "sub1_unagg_all.dta") | ("`file'" == "sub2_unagg_neg_dropobs.dta")| ///
-	("`file'" == "sub3_unagg_neg_dropfirms.dta") {
+	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
+	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
 	
 		*fixed effects without controls
 		tostring year, replace

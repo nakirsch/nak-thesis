@@ -18,16 +18,16 @@ global output "$wd/5_output"
 
 ///Set switches
 *Data prep
-global switch_1 "off"
-global switch_2 "off"
-global switch_3 "off"
-global switch_4 "off"
+global switch_1 "on"
+global switch_2 "on"
+global switch_3 "on"
+global switch_4 "on"
 
 *Analysis
-global switch_5 "off"
-global switch_6 "off"
-global switch_7 "off"
-global switch_8 "off"
+global switch_5 "on"
+global switch_6 "on"
+global switch_7 "on"
+global switch_8 "on"
 
 *Visuals
 global switch_9 "off"

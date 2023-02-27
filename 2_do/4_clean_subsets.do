@@ -32,7 +32,7 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 
 use "$prepped_data/sub4_agg_all.dta", clear 
 
-//Subset the data to year of the Paris Agreement
+*Subset the data to year of the Paris Agreement
 keep if year == 2015
 
 save "$prepped_data/lpm_sub4_agg_all.dta", replace

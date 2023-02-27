@@ -115,3 +115,8 @@ twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
 	   xline(2015, lcolor(black)) ///
 	   graphregion(color(white))	///
 	   legend(region(color(white)))
+	   
+*Count of companies, countries 
+use "$prepped_data/sub1_unagg_all.dta", clear
+unique company
+unique country 
