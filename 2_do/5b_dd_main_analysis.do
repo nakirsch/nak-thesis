@@ -29,13 +29,11 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 	use "$prepped_data/`file'", clear
 
 	*without controls
-	reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
-	outreg2 using "$output/`file'.xls", replace lab dec(3)
+	eststo: reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
 
 	*with controls 
-	reg environmental_intensity_sales post pledge_strong postxstrong ///
+	eststo: reg environmental_intensity_sales post pledge_strong postxstrong ///
 		eff_estimate ln_gdp ln_pop, cluster(region)
-	outreg2 using "$output/`file'.xls", lab dec(3)
 
 	if ("`file'" == "dd_bal_sub1_unagg_all.dta") | ("`file'" == "dd_bal_sub2_unagg_neg_dropobs.dta")| ///
 	("`file'" == "dd_bal_sub3_unagg_neg_dropfirms.dta") {
@@ -48,15 +46,12 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 		encode company, gen(companycode)
 		order companycode, a(company)
 
-		reghdfe environmental_intensity_sales postxstrong ///
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			, a(companycode yearcode)
-		outreg2 using "$output/`file'.xls", lab dec(3)
 
 		*fixed effects with controls 
-		reghdfe environmental_intensity_sales postxstrong ///
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
-		outreg2 using "$output/`file'.xls", lab dec(3)
-
 	}
 	
 	else {
@@ -69,17 +64,16 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 		encode country, gen(countrycode)
 		order countrycode, a(country)
 
-		reghdfe environmental_intensity_sales postxstrong ///
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			, a(countrycode yearcode)
-		outreg2 using "$output/`file'.xls", lab dec(3)
 
 		*fixed effects with controls 
-		reghdfe environmental_intensity_sales postxstrong ///
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
-		outreg2 using "$output/`file'.xls", lab dec(3)
-		
 	}
 	
+	esttab using "$output/`file'.tex", label replace se r2 tex 
+	eststo clear
 }
 
 /*
@@ -109,16 +103,8 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 		encode company, gen(companycode)
 		order companycode, a(company)
 
-		reghdfe environmental_intensity_sales postxstrong ///
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
-
-		if "`file'" == "dd_bal_sub1_unagg_all.dta" {
-		outreg2 using "$output/DD_bal_main.xls", replace lab dec(3) cttop(`file')
-		}
-		else {
-		outreg2 using "$output/DD_bal_main.xls", lab dec(3) cttop(`file')
-		}
-		
 	}
 	
 	else {
@@ -131,11 +117,12 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 		encode country, gen(countrycode)
 		order countrycode, a(country)
 
-		reghdfe environmental_intensity_sales postxstrong ///
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
-		outreg2 using "$output/DD_bal_main.xls", lab dec(3) cttop(`file')
-		
 	}
-	
 }
+	
+	esttab using "$output/dd_bal_main.tex", label replace se r2 tex
+	eststo clear
+
 

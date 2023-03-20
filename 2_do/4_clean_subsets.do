@@ -14,6 +14,7 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 	
 	label var post "Post 2016"
 	label var postxstrong "Post 2016 X Strong pledge"
+	label var environmental_intensity_sales "Environmental intensity (sales)"
 	
 	save "$prepped_data/dd_`file'", replace
 }
@@ -31,6 +32,7 @@ gen gdp_percap = gdp/pop
 gen ln_ghg_percap = ln(ghg_percap)
 gen ln_gdp_percap = ln(gdp_percap)
 
+label var pledge_strong "Strong pledge"
 label var ghg_percap "GHG emissions (kt of CO2 equivalent) per capita"
 label var gdp_percap "GDP (in USD) per capita"
 label var ln_ghg_percap "Natural log of GHG emissions (kt of CO2 equivalent) per capita"

@@ -1,0 +1,35 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{4}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}\\
+                    &\multicolumn{1}{c}{Environmental intensity (sales)}&\multicolumn{1}{c}{Environmental intensity (sales)}&\multicolumn{1}{c}{Environmental intensity (sales)}&\multicolumn{1}{c}{Environmental intensity (sales)}\\
+\hline
+Post 2016           &     0.00930         &      0.0103         &                     &                     \\
+                    &   (0.00824)         &   (0.00860)         &                     &                     \\
+[1em]
+Strong pledge       &      0.0505\sym{**} &      0.0548\sym{**} &                     &                     \\
+                    &    (0.0124)         &   (0.00808)         &                     &                     \\
+[1em]
+Post 2016 X Strong pledge&    -0.00893         &    -0.00897         &     -0.0115\sym{*}  &    -0.00363         \\
+                    &   (0.00964)         &   (0.00944)         &   (0.00563)         &   (0.00645)         \\
+[1em]
+Government effectiveness&                     &      0.0368         &                     &     -0.0192         \\
+                    &                     &    (0.0304)         &                     &    (0.0132)         \\
+[1em]
+Natural log of GDP (in USD)&                     &     -0.0170         &                     &      0.0903\sym{***}\\
+                    &                     &    (0.0210)         &                     &    (0.0149)         \\
+[1em]
+Natural log of population&                     &      0.0296         &                     &      -0.281\sym{***}\\
+                    &                     &    (0.0159)         &                     &    (0.0849)         \\
+[1em]
+Constant            &      -0.144\sym{***}&      -0.249         &      -0.102\sym{***}&       2.413         \\
+                    &    (0.0137)         &     (0.306)         &   (0.00170)         &     (1.506)         \\
+\hline
+Observations        &        4778         &        4778         &        4777         &        4777         \\
+\(R^{2}\)           &       0.009         &       0.015         &       0.894         &       0.896         \\
+\hline\hline
+\multicolumn{5}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{5}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
