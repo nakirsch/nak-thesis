@@ -5,6 +5,14 @@
 use "$prepped_data/full_dataset", clear
 drop code gicssubindustry pledge_strength ccpi_policy_national ccpi_policy_international
 
+label var pledge_strong "Strong pledge"
+label var eff_estimate "Government effectiveness"
+label var ghg "GHG emissions (kt of CO2 equivalent)"
+label var gdp "GDP (in USD)"
+label var pop "Population"
+label var ccpi_overall "Climate Change Performance Index"
+label var environmental_intensity_sales "Environmental intensity (sales)"
+
 //Subset 1: Unaggregated with all firms 
 preserve 
 egen anymiss = max(missing(environmental_intensity_sales)), by(country company)
@@ -50,6 +58,9 @@ gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 order country region year environmental_intensity_sales tot_environmental_cost tot_sales ///
 	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
+label var eff_estimate "Government effectiveness"
+label var ccpi_overall "Climate Change Performance Index"
+
 save "$prepped_data/bal_sub4_agg_all", replace
 restore
 
@@ -72,6 +83,9 @@ gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 order country region year environmental_intensity_sales tot_environmental_cost tot_sales ///
 	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
+label var eff_estimate "Government effectiveness"
+label var ccpi_overall "Climate Change Performance Index"
+	
 save "$prepped_data/bal_sub5_agg_neg_dropobs", replace
 restore
 
@@ -95,6 +109,9 @@ gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 order country region year environmental_intensity_sales tot_environmental_cost tot_sales ///
 	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
+label var eff_estimate "Government effectiveness"
+label var ccpi_overall "Climate Change Performance Index"
+
 save "$prepped_data/bal_sub6_agg_neg_dropfirms", replace
 restore
 
@@ -106,6 +123,10 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 		gen ln_ghg = ln(ghg)
 		gen ln_gdp = ln(gdp)
 		gen ln_pop = ln(pop)
+		
+		label var ln_ghg "Natural log of GHG emissions (kt of CO2 equivalent)"
+		label var ln_gdp "Natural log of GDP (in USD)"
+		label var ln_pop "Natural log of population"
 		
 		save "$prepped_data/`file'", replace
 	}

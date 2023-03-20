@@ -5,7 +5,7 @@ use "$prepped_data/lpm_sub4_agg_all.dta", clear
 
 *labels 
 label var pledge_strong "Strong pledge"
-label var eff_estimate "Government effectiveness (-2.5 weak to 2.5 strong)"
+label var eff_estimate "Government effectiveness"
 label var ln_ghg "Natural log of total GHG emissions (kt of CO2 equivalent)"
 label var ln_gdp "Natural log of GDP (in USD)"
 label var ln_pop "Natural log of total population"

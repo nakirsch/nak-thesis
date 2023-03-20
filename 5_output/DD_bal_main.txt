@@ -1,19 +1,19 @@
-	(1)	(2)	(3)	(4)	(5)	(6)
-	dd_bal_sub1_unagg_all.dta	dd_bal_sub2_unagg_neg_dropobs.dta	dd_bal_sub3_unagg_neg_dropfirms.dta	dd_bal_sub4_agg_all.dta	dd_bal_sub5_agg_neg_dropobs.dta	dd_bal_sub6_agg_neg_dropfirms.dta
-VARIABLES	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales
-						
-postxstrong	0.001	-0.004	0.004	0.036***	0.049***	0.033***
-	(0.007)	(0.006)	(0.006)	(0.013)	(0.013)	(0.012)
-eff_estimate	-0.020	-0.019	-0.011	-0.018	0.015	-0.015
-	(0.014)	(0.013)	(0.013)	(0.025)	(0.024)	(0.024)
-ln_gdp	0.096***	0.090***	0.092***	0.042	0.016	0.020
-	(0.016)	(0.015)	(0.015)	(0.030)	(0.030)	(0.029)
-ln_pop	-0.342***	-0.281***	-0.266***	-0.191	-0.035	-0.099
-	(0.091)	(0.085)	(0.084)	(0.151)	(0.148)	(0.144)
-Constant	3.357**	2.413	2.096	2.013	0.008	1.020
-	(1.613)	(1.506)	(1.495)	(2.544)	(2.496)	(2.434)
-						
-Observations	4,890	4,777	4,540	340	340	340
-R-squared	0.880	0.896	0.900	0.951	0.954	0.958
-Standard errors in parentheses						
-*** p<0.01, ** p<0.05, * p<0.1						
+		(1)	(2)	(3)	(4)	(5)	(6)
+		dd_bal_sub1_unagg_all.dta	dd_bal_sub2_unagg_neg_dropobs.dta	dd_bal_sub3_unagg_neg_dropfirms.dta	dd_bal_sub4_agg_all.dta	dd_bal_sub5_agg_neg_dropobs.dta	dd_bal_sub6_agg_neg_dropfirms.dta
+VARIABLES	LABELS	Environmental intensity (sales)	Environmental intensity (sales)	Environmental intensity (sales)	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales
+							
+postxstrong	Post 2016 X Strong pledge	0.001	-0.004	0.004	0.036***	0.049***	0.033***
+		(0.007)	(0.006)	(0.006)	(0.013)	(0.013)	(0.012)
+eff_estimate	Government effectiveness	-0.020	-0.019	-0.011	-0.018	0.015	-0.015
+		(0.014)	(0.013)	(0.013)	(0.025)	(0.024)	(0.024)
+ln_gdp	Natural log of GDP (in USD)	0.096***	0.090***	0.092***	0.042	0.016	0.020
+		(0.016)	(0.015)	(0.015)	(0.030)	(0.030)	(0.029)
+ln_pop	Natural log of population	-0.342***	-0.281***	-0.266***	-0.191	-0.035	-0.099
+		(0.091)	(0.085)	(0.084)	(0.151)	(0.148)	(0.144)
+Constant	Constant	3.357**	2.413	2.096	2.013	0.008	1.020
+		(1.613)	(1.506)	(1.495)	(2.544)	(2.496)	(2.434)
+							
+Observations		4,890	4,777	4,540	340	340	340
+R-squared		0.880	0.896	0.900	0.951	0.954	0.958
+Standard errors in parentheses							
+*** p<0.01, ** p<0.05, * p<0.1							

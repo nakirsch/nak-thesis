@@ -1,22 +1,22 @@
-	(1)	(2)	(3)	(4)
-VARIABLES	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales
-				
-post	0.006	0.006		
-	(0.007)	(0.008)		
-pledge_strong	0.037**	0.043***		
-	(0.014)	(0.009)		
-postxstrong	-0.007	-0.006	-0.007	0.001
-	(0.010)	(0.009)	(0.006)	(0.007)
-eff_estimate		0.032		-0.020
-		(0.025)		(0.014)
-ln_gdp		-0.011		0.096***
-		(0.019)		(0.016)
-ln_pop		0.025		-0.342***
-		(0.014)		(0.091)
-Constant	-0.127***	-0.317	-0.097***	3.357**
-	(0.017)	(0.294)	(0.002)	(1.613)
-				
-Observations	4,890	4,890	4,890	4,890
-R-squared	0.005	0.011	0.879	0.880
-Robust standard errors in parentheses				
-*** p<0.01, ** p<0.05, * p<0.1				
+		(1)	(2)	(3)	(4)
+VARIABLES	LABELS	Environmental intensity (sales)	Environmental intensity (sales)	Environmental intensity (sales)	Environmental intensity (sales)
+					
+post	Post 2016	0.006	0.006		
+		(0.007)	(0.008)		
+pledge_strong	Strong pledge	0.037**	0.043***		
+		(0.014)	(0.009)		
+postxstrong	Post 2016 X Strong pledge	-0.007	-0.006	-0.007	0.001
+		(0.010)	(0.009)	(0.006)	(0.007)
+eff_estimate	Government effectiveness		0.032		-0.020
+			(0.025)		(0.014)
+ln_gdp	Natural log of GDP (in USD)		-0.011		0.096***
+			(0.019)		(0.016)
+ln_pop	Natural log of population		0.025		-0.342***
+			(0.014)		(0.091)
+Constant	Constant	-0.127***	-0.317	-0.097***	3.357**
+		(0.017)	(0.294)	(0.002)	(1.613)
+					
+Observations		4,890	4,890	4,890	4,890
+R-squared		0.005	0.011	0.879	0.880
+Robust standard errors in parentheses					
+*** p<0.01, ** p<0.05, * p<0.1					

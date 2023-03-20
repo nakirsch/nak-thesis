@@ -30,12 +30,12 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 	*without controls
 	reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
-	outreg2 using "$output/`file'.xls", replace dec(3)
+	outreg2 using "$output/`file'.xls", replace lab dec(3)
 
 	*with controls 
 	reg environmental_intensity_sales post pledge_strong postxstrong ///
 		eff_estimate ln_gdp ln_pop, cluster(region)
-	outreg2 using "$output/`file'.xls", dec(3)
+	outreg2 using "$output/`file'.xls", lab dec(3)
 
 	if ("`file'" == "dd_bal_sub1_unagg_all.dta") | ("`file'" == "dd_bal_sub2_unagg_neg_dropobs.dta")| ///
 	("`file'" == "dd_bal_sub3_unagg_neg_dropfirms.dta") {
@@ -50,12 +50,12 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 		reghdfe environmental_intensity_sales postxstrong ///
 			, a(companycode yearcode)
-		outreg2 using "$output/`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", lab dec(3)
 
 		*fixed effects with controls 
 		reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
-		outreg2 using "$output/`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", lab dec(3)
 
 	}
 	
@@ -71,12 +71,12 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 		reghdfe environmental_intensity_sales postxstrong ///
 			, a(countrycode yearcode)
-		outreg2 using "$output/`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", lab dec(3)
 
 		*fixed effects with controls 
 		reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
-		outreg2 using "$output/`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", lab dec(3)
 		
 	}
 	
@@ -113,10 +113,10 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
 
 		if "`file'" == "dd_bal_sub1_unagg_all.dta" {
-		outreg2 using "$output/DD_bal_main.xls", replace dec(3) cttop(`file')
+		outreg2 using "$output/DD_bal_main.xls", replace lab dec(3) cttop(`file')
 		}
 		else {
-		outreg2 using "$output/DD_bal_main.xls", dec(3) cttop(`file')
+		outreg2 using "$output/DD_bal_main.xls", lab dec(3) cttop(`file')
 		}
 		
 	}
@@ -133,7 +133,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 		reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
-		outreg2 using "$output/DD_bal_main.xls", dec(3) cttop(`file')
+		outreg2 using "$output/DD_bal_main.xls", lab dec(3) cttop(`file')
 		
 	}
 	

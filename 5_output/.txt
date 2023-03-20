@@ -1,0 +1,18 @@
+		(1)
+VARIABLES	LABELS	environmental_intensity_sales
+		
+postxstrong	Post 2016 X Strong pledge	0.080**
+		(0.033)
+eff_estimate	Government effectiveness	0.066
+		(0.066)
+ln_gdp	Natural log of GDP (in USD)	0.175**
+		(0.076)
+ln_pop	Natural log of population	-0.966***
+		(0.359)
+Constant	Constant	11.529*
+		(6.171)
+		
+Observations		495
+R-squared		0.714
+Standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		

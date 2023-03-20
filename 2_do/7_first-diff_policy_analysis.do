@@ -21,9 +21,9 @@ foreach file in "fd_sub1_unagg_all.dta" "fd_sub2_unagg_neg_dropobs.dta" "fd_sub3
 	reg evintensity_dif policy_dif gov_dif ln_gdp_dif ln_pop_dif, r
 	
 	if "`file'" == "fd_sub1_unagg_all.dta" {
-		outreg2 using "$output/FD.xls", replace dec(3) cttop(`file')
+		outreg2 using "$output/FD.xls", replace lab dec(3) cttop(`file')
 	}
 	else {
-		outreg2 using "$output/FD.xls", dec(3) cttop(`file')
+		outreg2 using "$output/FD.xls", lab dec(3) cttop(`file')
 	}
 }
