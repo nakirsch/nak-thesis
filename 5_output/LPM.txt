@@ -1,20 +1,20 @@
 	(1)	(2)
 VARIABLES	pledge_strong	pledge_strong
 		
-eff_estimate	0.149	
-	(0.144)	
-ln_ghg	-0.148***	
-	(0.024)	
-ln_gdp	0.205	
-	(0.109)	
-ln_pop	-0.087	
-	(0.116)	
+eff_estimate	0.301	
+	(0.164)	
+ghg_percap	-0.031	
+	(0.019)	
+ln_gdp_percap	0.031	
+	(0.123)	
+ln_pop	-0.027	
+	(0.033)	
 ccpi_overall		0.017*
 		(0.008)
-Constant	-1.772	-0.301
-	(1.205)	(0.343)
+Constant	0.449	-0.301
+	(1.285)	(0.343)
 		
 Observations	61	47
-R-squared	0.408	0.120
+R-squared	0.344	0.120
 Robust standard errors in parentheses		
 *** p<0.01, ** p<0.05, * p<0.1		

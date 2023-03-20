@@ -1,0 +1,22 @@
+	(1)	(2)	(3)	(4)
+VARIABLES	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales	environmental_intensity_sales
+				
+post	0.009	0.010		
+	(0.008)	(0.009)		
+pledge_strong	0.050***	0.055***		
+	(0.012)	(0.008)		
+postxstrong	-0.009	-0.009	-0.012**	-0.004
+	(0.010)	(0.009)	(0.006)	(0.006)
+eff_estimate		0.037		-0.019
+		(0.030)		(0.013)
+ln_gdp		-0.017		0.090***
+		(0.021)		(0.015)
+ln_pop		0.030		-0.281***
+		(0.016)		(0.085)
+Constant	-0.144***	-0.249	-0.102***	2.413
+	(0.014)	(0.306)	(0.002)	(1.506)
+				
+Observations	4,778	4,778	4,777	4,777
+R-squared	0.009	0.015	0.894	0.896
+Robust standard errors in parentheses				
+*** p<0.01, ** p<0.05, * p<0.1				

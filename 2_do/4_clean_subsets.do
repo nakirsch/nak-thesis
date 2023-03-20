@@ -1,6 +1,6 @@
 ///Clean subsets of the data for analyses
 ///Created: February 25, 2023
-///Modified: February 25, 2023
+///Modified: March 19, 2023
 
 //Subsets for DD
 
@@ -15,25 +15,18 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 	save "$prepped_data/dd_`file'", replace
 }
 
-//Subsets for OLS
-
-foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_neg_dropfirms.dta" /// 
-	"sub4_agg_all.dta" "sub5_agg_neg_dropobs.dta" "sub6_agg_neg_dropfirms.dta" {
-
-	use "$prepped_data/`file'", clear
-
-	//Subset the data to years before the Paris Agreement
-	keep if year < 2015
-	
-	save "$prepped_data/ols_`file'", replace
-}
-
 //Subsets for LPM
 
 use "$prepped_data/sub4_agg_all.dta", clear 
 
 *Subset the data to year of the Paris Agreement
 keep if year == 2015
+
+gen ghg_percap = ghg/pop
+gen gdp_percap = gdp/pop
+
+gen ln_ghg_percap = ln(ghg_percap)
+gen ln_gdp_percap = ln(gdp_percap)
 
 save "$prepped_data/lpm_sub4_agg_all.dta", replace
 

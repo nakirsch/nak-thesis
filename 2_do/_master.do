@@ -1,6 +1,6 @@
 ///Master file
 ///Created: November 11, 2022
-///Modified: February 3, 2023
+///Modified: March 19, 2023
 
 clear 
 
@@ -18,19 +18,23 @@ global output "$wd/5_output"
 
 ///Set switches
 *Data prep
-global switch_1 "on"
-global switch_2 "on"
-global switch_3 "on"
-global switch_4 "on"
+global switch_1 "off"
+global switch_2 "off"
+global switch_3 "off"
+global switch_3b "off"
+global switch_4 "off"
+global switch_4b "off"
 
 *Analysis
-global switch_5 "on"
-global switch_6 "on"
-global switch_7 "on"
-global switch_8 "on"
+global switch_5 "off"
+global switch_5b "off"
+global switch_6 "off"
+global switch_6b "off"
+global switch_7 "off"
+global switch_7b "off"
 
 *Visuals
-global switch_9 "off"
+global switch_8 "off"
 
 ///Run files
 if "$switch_1" == "on" {
@@ -45,26 +49,42 @@ if "$switch_3" == "on" {
 	do "$do_files/3_create_subsets.do"
 }
 
+if "$switch_3b" == "on" {
+	do "$do_files/3b_create_subsets.do"
+}
+
 if "$switch_4" == "on" {
 	do "$do_files/4_clean_subsets.do"
+}
+
+if "$switch_4b" == "on" {
+	do "$do_files/4b_clean_subsets.do"
 }
 
 if "$switch_5" == "on" {
 	do "$do_files/5_dd_main_analysis.do"
 }
 
+if "$switch_5b" == "on" {
+	do "$do_files/5b_dd_main_analysis.do"
+}
+
 if "$switch_6" == "on" {
-	do "$do_files/6_ols_pretrends_analysis.do"
+	do "$do_files/6_lpm_pledge_analysis.do"
+}
+
+if "$switch_6" == "on" {
+	do "$do_files/6b_lpm_pledge_analysis.do"
 }
 
 if "$switch_7" == "on" {
-	do "$do_files/7_lpm_pledge_analysis.do"
+	do "$do_files/7_first-diff_policy_analysis.do"
+}
+
+if "$switch_7b" == "on" {
+	do "$do_files/7b_first-diff_policy_analysis.do"
 }
 
 if "$switch_8" == "on" {
-	do "$do_files/8_first-diff_policy_analysis.do"
-}
-
-if "$switch_9" == "on" {
-	do "$do_files/9_tables_figures.do"
+	do "$do_files/8_tables_figures.do"
 }

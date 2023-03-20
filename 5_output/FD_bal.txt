@@ -1,0 +1,19 @@
+	(1)	(2)	(3)	(4)	(5)	(6)
+	fd_bal_sub1_unagg_all.dta	fd_bal_sub2_unagg_neg_dropobs.dta	fd_bal_sub3_unagg_neg_dropfirms.dta	fd_bal_sub4_agg_all.dta	fd_bal_sub5_agg_neg_dropobs.dta	fd_bal_sub6_agg_neg_dropfirms.dta
+VARIABLES	evintensity_dif	evintensity_dif	evintensity_dif	evintensity_dif	evintensity_dif	evintensity_dif
+						
+policy_dif	0.010	0.005	0.006	0.003	0.004	0.004
+	(0.006)	(0.005)	(0.006)	(0.006)	(0.007)	(0.007)
+gov_dif	-0.091**	-0.067*	-0.068*	-0.079*	-0.078*	-0.076*
+	(0.044)	(0.039)	(0.040)	(0.042)	(0.041)	(0.043)
+ln_gdp_dif	-0.173	-0.084	-0.078	-0.119	-0.029	-0.042
+	(0.117)	(0.107)	(0.113)	(0.215)	(0.210)	(0.214)
+ln_pop_dif	0.028	-0.338	-0.184	-0.096	-0.023	0.035
+	(0.613)	(0.554)	(0.569)	(1.524)	(1.504)	(1.499)
+Constant	-0.001	0.004	0.003	0.006	0.008	0.008
+	(0.006)	(0.005)	(0.005)	(0.010)	(0.010)	(0.010)
+						
+Observations	484	472	449	31	31	31
+R-squared	0.013	0.009	0.008	0.047	0.047	0.044
+Robust standard errors in parentheses						
+*** p<0.01, ** p<0.05, * p<0.1						

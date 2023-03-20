@@ -1,6 +1,6 @@
 ///Create subsets of the data for further analysis
 ///Created: January 28, 2023
-///Modified: February 25, 2023
+///Modified: March 19, 2023
 
 use "$prepped_data/full_dataset", clear
 drop code gicssubindustry pledge_strength ccpi_policy_national ccpi_policy_international
@@ -38,7 +38,7 @@ gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 order country region year environmental_intensity_sales tot_environmental_cost tot_sales ///
 	ccpi_overall ccpi_policy_score ccpi_policy_overall eff_estimate reg_estimate ghg gdp pop pledge_strong
 
-	save "$prepped_data/sub4_agg_all", replace
+save "$prepped_data/sub4_agg_all", replace
 restore
 
 //Subset 5: Aggregated at the country level with only firms with negative emissions (dropped observations)
@@ -89,4 +89,18 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 		gen ln_pop = ln(pop)
 		
 		save "$prepped_data/`file'", replace
+	}
+
+	
+//Balance Samples for Each Subset 
+
+foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_neg_dropfirms.dta" /// 
+	"sub4_agg_all.dta" "sub5_agg_neg_dropobs.dta" "sub6_agg_neg_dropfirms.dta" {
+		
+	use "$prepped_data/`file'", clear
+	egen anymiss = max(missing(environmental_intensity_sales)), by(country company)
+	drop if anymiss == 1 // 489 companies in 34 countries remain
+	drop anymiss
+		
+	save "$prepped_data/bal_`file'", replace
 	}

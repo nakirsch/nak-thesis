@@ -30,12 +30,12 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 
 	*without controls
 	reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
-	outreg2 using "$output/DD_`file'.xls", replace dec(3)
+	outreg2 using "$output/`file'.xls", replace dec(3)
 
 	*with controls 
 	reg environmental_intensity_sales post pledge_strong postxstrong ///
 		eff_estimate ln_gdp ln_pop, cluster(region)
-	outreg2 using "$output/DD_`file'.xls", dec(3)
+	outreg2 using "$output/`file'.xls", dec(3)
 
 	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
 	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
@@ -50,12 +50,12 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 
 		reghdfe environmental_intensity_sales postxstrong ///
 			, a(companycode yearcode)
-		outreg2 using "$output/DD_`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", dec(3)
 
 		*fixed effects with controls 
 		reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
-		outreg2 using "$output/DD_`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", dec(3)
 
 	}
 	
@@ -71,12 +71,12 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 
 		reghdfe environmental_intensity_sales postxstrong ///
 			, a(countrycode yearcode)
-		outreg2 using "$output/DD_`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", dec(3)
 
 		*fixed effects with controls 
 		reghdfe environmental_intensity_sales postxstrong ///
 			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
-		outreg2 using "$output/DD_`file'.xls", dec(3)
+		outreg2 using "$output/`file'.xls", dec(3)
 		
 	}
 	
@@ -90,3 +90,52 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 
 	marginsplot , xscale(log)
 */
+
+*Save regressions for fixed effects with controls for all subsets
+foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3_unagg_neg_dropfirms.dta" /// 
+	"dd_sub4_agg_all.dta" "dd_sub5_agg_neg_dropobs.dta" "dd_sub6_agg_neg_dropfirms.dta" {
+
+	*Unaggregated version
+	use "$prepped_data/`file'", clear
+
+	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
+	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
+	
+		*fixed effects with controls 
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode company, gen(companycode)
+		order companycode, a(company)
+
+		reghdfe environmental_intensity_sales postxstrong ///
+			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
+
+		if "`file'" == "dd_sub1_unagg_all.dta" {
+		outreg2 using "$output/DD_main.xls", replace dec(3) cttop(`file')
+		}
+		else {
+		outreg2 using "$output/DD_main.xls", dec(3) cttop(`file')
+		}
+		
+	}
+	
+	else {
+		
+		*fixed effects without controls
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode country, gen(countrycode)
+		order countrycode, a(country)
+
+		reghdfe environmental_intensity_sales postxstrong ///
+			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
+		outreg2 using "$output/DD_main.xls", dec(3) cttop(`file')
+		
+	}
+	
+}
+
