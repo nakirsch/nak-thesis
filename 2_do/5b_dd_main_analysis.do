@@ -33,7 +33,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 	*with controls 
 	eststo: reg environmental_intensity_sales post pledge_strong postxstrong ///
-		eff_estimate ln_gdp ln_pop, cluster(region)
+		eff_estimate ln_gdp_percap ln_pop, cluster(region)
 
 	if ("`file'" == "dd_bal_sub1_unagg_all.dta") | ("`file'" == "dd_bal_sub2_unagg_neg_dropobs.dta")| ///
 	("`file'" == "dd_bal_sub3_unagg_neg_dropfirms.dta") {
@@ -51,7 +51,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 		*fixed effects with controls 
 		eststo: reghdfe environmental_intensity_sales postxstrong ///
-			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
+			eff_estimate ln_gdp_percap ln_pop, a(companycode yearcode)
 	}
 	
 	else {
@@ -69,10 +69,10 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 
 		*fixed effects with controls 
 		eststo: reghdfe environmental_intensity_sales postxstrong ///
-			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
+			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
 	}
 	
-	esttab using "$output/`file'.tex", label replace se r2 tex 
+	esttab using "$output/`file'.tex", label replace se r2 ar2 tex 
 	eststo clear
 }
 
@@ -104,7 +104,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 		order companycode, a(company)
 
 		eststo: reghdfe environmental_intensity_sales postxstrong ///
-			eff_estimate ln_gdp ln_pop, a(companycode yearcode)
+			eff_estimate ln_gdp_percap ln_pop, a(companycode yearcode)
 	}
 	
 	else {
@@ -118,11 +118,11 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 		order countrycode, a(country)
 
 		eststo: reghdfe environmental_intensity_sales postxstrong ///
-			eff_estimate ln_gdp ln_pop, a(countrycode yearcode)
+			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
 	}
 }
 	
-	esttab using "$output/dd_bal_main.tex", label replace se r2 tex
+	esttab using "$output/dd_bal_main.tex", label replace se r2 ar2 tex
 	eststo clear
 
 

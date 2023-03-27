@@ -18,7 +18,7 @@ foreach file in "fd_sub1_unagg_all.dta" "fd_sub2_unagg_neg_dropobs.dta" "fd_sub3
 	use "$prepped_data/`file'", clear
 
 	//Run regression
-	eststo: reg evintensity_dif policy_dif gov_dif ln_gdp_dif ln_pop_dif, r
+	eststo: reg evintensity_dif policy_dif gov_dif ln_gdp_percap_dif ln_pop_dif, r
 	esttab using "$output/fd.tex", label replace se r2 tex 
 	eststo clear
 }

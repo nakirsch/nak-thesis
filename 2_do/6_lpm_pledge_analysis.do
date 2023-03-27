@@ -22,5 +22,5 @@ eststo: reg pledge_strong eff_estimate ghg_percap ln_gdp_percap ln_pop, cluster(
 
 //Run with CCPI as input
 eststo: reg pledge_strong ccpi_overall, cluster(region)
-esttab using "$output/lpm.tex", label replace se r2 tex 
+esttab using "$output/lpm.tex", label replace se r2 ar2 tex 
 eststo clear 

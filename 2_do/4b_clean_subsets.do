@@ -12,10 +12,16 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 	replace post = 1 if year > 2016
 	gen postxstrong = post * pledge_strong
 	
+	gen gdp_percap = gdp/pop
+	gen ln_gdp_percap = ln(gdp_percap)
+	
+	label var pledge_strong "Strong pledge"
 	label var post "Post 2016"
 	label var postxstrong "Post 2016 X Strong pledge"
-	label var environmental_intensity_sales "Environmental intensity (sales)"
-	
+	label var environmental_intensity_sales "Environmental intensity"
+	label var gdp_percap "GDP per capita (USD)"
+	label var ln_gdp_percap "Natural log of GDP per capita (USD)"
+
 	save "$prepped_data/dd_`file'", replace
 }
 
@@ -34,9 +40,9 @@ gen ln_gdp_percap = ln(gdp_percap)
 
 label var pledge_strong "Strong pledge"
 label var ghg_percap "GHG emissions (kt of CO2 equivalent) per capita"
-label var gdp_percap "GDP (in USD) per capita"
+label var gdp_percap "GDP per capita (USD)"
 label var ln_ghg_percap "Natural log of GHG emissions (kt of CO2 equivalent) per capita"
-label var ln_gdp_percap "Natural log of GDP (in USD) per capita"
+label var ln_gdp_percap "Natural log of GDP per capita (USD)"
 
 save "$prepped_data/lpm_bal_sub4_agg_all.dta", replace
 
@@ -46,6 +52,11 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 	"bal_sub4_agg_all.dta" "bal_sub5_agg_neg_dropobs.dta" "bal_sub6_agg_neg_dropfirms.dta" {
 	
 	use "$prepped_data/`file'", clear
+	
+	gen gdp_percap = gdp/pop
+	gen ln_gdp_percap = ln(gdp_percap)
+	label var gdp_percap "GDP per capita (USD)"
+	label var ln_gdp_percap "Natural log of GDP per capita (USD)"
 	
 	//Subset data to 2018-19
 	keep if year > 2017
@@ -62,13 +73,13 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 	
 	if ("`file'" == "bal_sub1_unagg_all.dta") | ("`file'" == "bal_sub2_unagg_neg_dropobs.dta")| ///
 	   ("`file'" == "bal_sub3_unagg_neg_dropfirms.dta") {
-		keep country company year environmental_intensity_sales policy_level eff_estimate ln_gdp ln_pop
+		keep country company year environmental_intensity_sales policy_level eff_estimate ln_gdp_percap ln_pop
 		ren environmental_intensity_sales evintensity
 		reshape wide evintensity policy_level eff_estimate ln_gdp ln_pop, i(country company) j(year)
 	}
 	
 	else {
-		keep country year environmental_intensity_sales policy_level eff_estimate ln_gdp ln_pop
+		keep country year environmental_intensity_sales policy_level eff_estimate ln_gdp_percap ln_pop
 		ren environmental_intensity_sales evintensity
 		reshape wide evintensity policy_level eff_estimate ln_gdp ln_pop, i(country) j(year)
 	}
@@ -77,14 +88,14 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 	gen evintensity_dif = evintensity2019 - evintensity2018
 	gen policy_dif = policy_level2019 - policy_level2018
 	gen gov_dif = eff_estimate2019 - eff_estimate2018
-	gen ln_gdp_dif = ln_gdp2019 - ln_gdp2018
+	gen ln_gdp_percap_dif = ln_gdp_percap2019 - ln_gdp_percap2018
 	gen ln_pop_dif = ln_pop2019 - ln_pop2018
 	
-	label var evintensity_dif "Difference in environmental intensity (sales) for 2019-2018"
-	label var policy_dif "Difference in environmental policy level for 2019-2018"
-	label var gov_dif "Difference in government effectivenss for 2019-2018"
-	label var ln_gdp_dif "Difference in natural log of GDP (in USD) for 2019-2018" 
-	label var ln_pop_dif "Difference in natural log of population for 2019-2018"
-
+	label var evintensity_dif "Difference in environmental intensity"
+	label var policy_dif "Difference in environmental policy level"
+	label var gov_dif "Difference in government effectivenss"
+	label var ln_gdp_percap_dif "Difference in natural log of GDP per capita (USD)" 
+	label var ln_pop_dif "Difference in natural log of population"
+	
 	save "$prepped_data/fd_`file'", replace
 }

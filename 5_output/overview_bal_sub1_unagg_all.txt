@@ -1,0 +1,12 @@
+		(1)	(2)	(3)	(4)	(5)
+VARIABLES	LABELS	N	mean	sd	min	max
+						
+environmental_intensity_sales	Environmental intensity	4,890	-0.0988	0.222	-1.836	1.349
+ccpi_overall	Climate Change Performance Index	4,856	52.40	11.99	18.82	77.76
+eff_estimate	Government effectiveness	4,890	1.443	0.469	-0.499	2.236
+pledge_strong	Strong pledge	4,890	0.763	0.425	0	1
+ln_ghg	Natural log of GHG emissions (kt of CO2 equivalent)	4,890	13.55	1.349	9.195	16.36
+ln_pop	Natural log of population	4,890	18.08	1.154	13.14	21.04
+policy_level	Policy level	968	2.341	1.173	1	4
+ln_gdp_percap	Natural log of GDP per capita (USD)	4,890	10.57	0.612	7.213	11.73
+						

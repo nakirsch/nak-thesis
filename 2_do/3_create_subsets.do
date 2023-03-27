@@ -1,6 +1,6 @@
 ///Create subsets of the data for further analysis
 ///Created: January 28, 2023
-///Modified: March 19, 2023
+///Modified: March 26, 2023
 
 use "$prepped_data/full_dataset", clear
 drop code gicssubindustry pledge_strength ccpi_policy_national ccpi_policy_international
@@ -8,10 +8,10 @@ drop code gicssubindustry pledge_strength ccpi_policy_national ccpi_policy_inter
 label var pledge_strong "Strong pledge"
 label var eff_estimate "Government effectiveness"
 label var ghg "GHG emissions (kt of CO2 equivalent)"
-label var gdp "GDP (in USD)"
+label var gdp "GDP (USD)"
 label var pop "Population"
 label var ccpi_overall "Climate Change Performance Index"
-label var environmental_intensity_sales "Environmental intensity (sales)"
+label var environmental_intensity_sales "Environmental intensity"
 
 //Subset 1: Unaggregated with all firms 
 preserve 
@@ -106,7 +106,7 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 		gen ln_pop = ln(pop)
 		
 		label var ln_ghg "Natural log of GHG emissions (kt of CO2 equivalent)"
-		label var ln_gdp "Natural log of GDP (in USD)"
+		label var ln_gdp "Natural log of GDP (USD)"
 		label var ln_pop "Natural log of population"
 		
 		save "$prepped_data/`file'", replace
