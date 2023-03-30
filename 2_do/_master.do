@@ -34,7 +34,7 @@ global switch_7 "on"
 global switch_7b "on"
 
 *Visuals
-global switch_8 "off"
+global switch_8 "on"
 
 ///Run files
 if "$switch_1" == "on" {

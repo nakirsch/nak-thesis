@@ -90,7 +90,7 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 	gen ln_gdp_percap_dif = ln_gdp_percap2019 - ln_gdp_percap2018
 	gen ln_pop_dif = ln_pop2019 - ln_pop2018
 	
-	label var evintensity_dif "Difference in environmental intensity"
+	label var evintensity_dif "Difference in intensity"
 	label var policy_dif "Difference in environmental policy level"
 	label var gov_dif "Difference in government effectivenss"
 	label var ln_gdp_percap_dif "Difference in natural log of GDP per capita (USD)" 
