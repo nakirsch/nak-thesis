@@ -72,7 +72,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
 	}
 	
-	esttab using "$output/`file'.tex", label replace se r2 tex 
+	esttab using "$output/`file'.tex", label replace se r2 ar2 tex 
 	eststo clear
 }
 
@@ -122,7 +122,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 	}
 }
 	
-	esttab using "$output/dd_bal_main.tex", label replace se r2 tex
+	esttab using "$output/dd_bal_main.tex", label replace se r2 ar2 tex
 	eststo clear
 
 

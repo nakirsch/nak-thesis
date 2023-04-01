@@ -14,13 +14,9 @@ pledge = B0 + B1CCPI
 use "$prepped_data/lpm_bal_sub4_agg_all.dta", clear 
 
 //Run with controls as input
-eststo: reg pledge_strong eff_estimate ln_ghg ln_gdp ln_pop, cluster(region)
-eststo: reg pledge_strong eff_estimate ghg_percap gdp_percap ln_pop, cluster(region)
-eststo: reg pledge_strong eff_estimate ghg_percap ln_gdp ln_pop, cluster(region)
-eststo: reg pledge_strong eff_estimate ln_ghg gdp_percap ln_pop, cluster(region)
-eststo: reg pledge_strong eff_estimate ghg_percap ln_gdp_percap ln_pop, cluster(region)
+eststo: reg pledge_strong eff_estimate ln_gdp_percap ln_ghg_percap, cluster(region)
 
 //Run with CCPI as input
 eststo: reg pledge_strong ccpi_overall, cluster(region)
-esttab using "$output/lpm_bal.tex", label replace se r2 ar2 tex 
+esttab using "$output/lpm_bal.tex", label replace se r2 tex 
 eststo clear 

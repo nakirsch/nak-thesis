@@ -17,7 +17,7 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 	
 	label var pledge_strong "Strong pledge"
 	label var post "Post 2016"
-	label var postxstrong "Post 2016 X Strong pledge"
+	label var postxstrong "Post 2016 x strong pledge"
 	label var environmental_intensity_sales "Environmental intensity"
 	label var gdp_percap "GDP per capita (USD)"
 	label var ln_gdp_percap "Natural log of GDP per capita (USD)"
@@ -91,11 +91,11 @@ foreach file in "bal_sub1_unagg_all.dta" "bal_sub2_unagg_neg_dropobs.dta" "bal_s
 	gen ln_gdp_percap_dif = ln_gdp_percap2019 - ln_gdp_percap2018
 	gen ln_pop_dif = ln_pop2019 - ln_pop2018
 	
-	label var evintensity_dif "Difference in intensity"
-	label var policy_dif "Difference in environmental policy level"
-	label var gov_dif "Difference in government effectivenss"
-	label var ln_gdp_percap_dif "Difference in natural log of GDP per capita (USD)" 
-	label var ln_pop_dif "Difference in natural log of population"
+	label var evintensity_dif "Δ Intensity"
+	label var policy_dif "Δ Environmental policy level"
+	label var gov_dif "Δ Government effectivenss"
+	label var ln_gdp_percap_dif "Δ Natural log of GDP per capita (USD)" 
+	label var ln_pop_dif "Δ Natural log of population"
 	
 	save "$prepped_data/fd_`file'", replace
 }

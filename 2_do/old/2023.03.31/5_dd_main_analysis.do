@@ -1,6 +1,6 @@
-///Diff-in-diff to examine impact of pledges on firm-level intensity of production (using balanced sample)
-///Created: March 19, 2023
-///Modified: March 19, 2023
+///Diff-in-diff to examine impact of pledges on firm-level intensity of production
+///Created: February 3, 2023
+///Modified: February 25, 2023
 
 /*
 The Paris Agreement is a legally binding international treaty on climate change. It was adopted by 196 Parties at COP 21 in Paris, on 12 December 2015 and entered into force on 4 November 2016.
@@ -22,8 +22,8 @@ Intensity = B0 + B1post + B2strong + B3post*strong
 		 + Error
 */
 
-foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" "dd_bal_sub3_unagg_neg_dropfirms.dta" /// 
-	"dd_bal_sub4_agg_all.dta" "dd_bal_sub5_agg_neg_dropobs.dta" "dd_bal_sub6_agg_neg_dropfirms.dta" {
+foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3_unagg_neg_dropfirms.dta" /// 
+	"dd_sub4_agg_all.dta" "dd_sub5_agg_neg_dropobs.dta" "dd_sub6_agg_neg_dropfirms.dta" {
 
 	*Unaggregated version
 	use "$prepped_data/`file'", clear
@@ -35,8 +35,8 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 	eststo: reg environmental_intensity_sales post pledge_strong postxstrong ///
 		eff_estimate ln_gdp_percap ln_pop, cluster(region)
 
-	if ("`file'" == "dd_bal_sub1_unagg_all.dta") | ("`file'" == "dd_bal_sub2_unagg_neg_dropobs.dta")| ///
-	("`file'" == "dd_bal_sub3_unagg_neg_dropfirms.dta") {
+	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
+	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
 	
 		*fixed effects without controls
 		tostring year, replace
@@ -72,7 +72,7 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
 	}
 	
-	esttab using "$output/`file'.tex", label replace se r2 tex 
+	esttab using "$output/`file'.tex", label replace se r2 ar2 tex 
 	eststo clear
 }
 
@@ -86,14 +86,14 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 */
 
 *Save regressions for fixed effects with controls for all subsets
-foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" "dd_bal_sub3_unagg_neg_dropfirms.dta" /// 
-	"dd_bal_sub4_agg_all.dta" "dd_bal_sub5_agg_neg_dropobs.dta" "dd_bal_sub6_agg_neg_dropfirms.dta" {
+foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3_unagg_neg_dropfirms.dta" /// 
+	"dd_sub4_agg_all.dta" "dd_sub5_agg_neg_dropobs.dta" "dd_sub6_agg_neg_dropfirms.dta" {
 
 	*Unaggregated version
 	use "$prepped_data/`file'", clear
 
-	if ("`file'" == "dd_bal_sub1_unagg_all.dta") | ("`file'" == "dd_bal_sub2_unagg_neg_dropobs.dta")| ///
-	("`file'" == "dd_bal_sub3_unagg_neg_dropfirms.dta") {
+	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
+	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
 	
 		*fixed effects with controls 
 		tostring year, replace
@@ -122,7 +122,5 @@ foreach file in "dd_bal_sub1_unagg_all.dta" "dd_bal_sub2_unagg_neg_dropobs.dta" 
 	}
 }
 	
-	esttab using "$output/dd_bal_main.tex", label replace se r2 tex
+	esttab using "$output/dd_main.tex", label replace se r2 ar2 tex
 	eststo clear
-
-

@@ -90,82 +90,48 @@ export excel using "$output/pledges_all.xlsx", replace firstrow(variables)
 
 //Diff in diff graphs 
 
-graph set window fontface "Times"
+*Collapse so companies have weight proportional to size
 
+foreach file in "sub1_unagg_all" "bal_sub1_unagg_all" {
+	use "$prepped_data/`file'.dta", clear
+	
+	
+	collapse (mean) tot_environmental_cost tot_sales, by(pledge_strong year)
+	gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 
-use "$prepped_data/sub1_unagg_all", clear
+	twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
+		   connected environmental_intensity_sales year if pledge_strong == 0, ///
+		   ytitle("Environmental Intensity") ///
+		   xtitle("") ///
+		   xlabel(2010 (1) 2019) ///
+		   legend(order(1 "Strong" 2 "Weak")) ///
+		   xline(2016, lcolor(black)) ///
+		   graphregion(color(white))	///
+		   legend(region(color(white)))
 
-collapse (mean) tot_environmental_cost tot_sales, by(pledge_strong year)
-gen environmental_intensity_sales = tot_environmental_cost/tot_sales
-
-twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
-	   connected environmental_intensity_sales year if pledge_strong == 0, ///
-	   title("Full Data, Weighted") ///
-	   ytitle("Environmental Intensity") ///
-	   xtitle("") ///
-	   xlabel(none) ///
-	   xline(2016, lcolor(black)) ///
-	   plotregion(fcolor(white)) ///
-	   graphregion(color(white)) ///
-	   legend(order(1 "Strong" 2 "Weak")) ///
-	   legend(region(color(white))) ///
-	   saving(all_w, replace)
+	graph export "$output/graph_weighted_`file'.png", replace	
+}
 	   
-use "$prepped_data/sub1_unagg_all", clear
+*Collapse so all companies/countries have the same weight
 
-collapse (mean) environmental_intensity_sales tot_environmental_cost, by(pledge_strong year)
+foreach file in "sub1_unagg_all" "bal_sub1_unagg_all" {
+	use "$prepped_data/`file'.dta", clear
+	
+	collapse (mean) environmental_intensity_sales tot_environmental_cost, by(pledge_strong year)
 
-twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
-	   connected environmental_intensity_sales year if pledge_strong == 0, ///
-	   title("Full Data, Unweighted") ///
-	   ytitle("") ///
-	   xtitle("") ///
-	   xlabel(none) ///
-	   xline(2016, lcolor(black)) ///
-	   plotregion(fcolor(white)) ///
-	   graphregion(color(white)) ///
-	   legend(order(1 "Strong" 2 "Weak")) ///
-	   legend(region(color(white))) ///
-	   saving(all_no_w, replace)
-	  
-use "$prepped_data/bal_sub1_unagg_all", clear
+	twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
+		   connected environmental_intensity_sales year if pledge_strong == 0, ///
+		   ytitle("Environmental Intensity") ///
+		   xtitle("") ///
+		   xlabel(2010 (1) 2019) ///
+		   legend(order(1 "Strong" 2 "Weak")) ///
+		   xline(2016, lcolor(black)) ///
+		   graphregion(color(white))	///
+		   legend(region(color(white)))
 
-collapse (mean) tot_environmental_cost tot_sales, by(pledge_strong year)
-gen environmental_intensity_sales = tot_environmental_cost/tot_sales
-
-twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
-	   connected environmental_intensity_sales year if pledge_strong == 0, ///
-	   title("Clean Data, Weighted") ///
-	   ytitle("Environmental Intensity") ///
-	   xtitle("") ///
-	   xlabel(2010 (1) 2019) ///
-	   xline(2016, lcolor(black)) ///
-	   plotregion(fcolor(white)) ///
-	   graphregion(color(white))	///
-	   legend(order(1 "Strong" 2 "Weak")) ///
-	   legend(region(color(white))) ///
-	   saving(sub_w, replace)
-
-use "$prepped_data/bal_sub1_unagg_all", clear
-
-collapse (mean) environmental_intensity_sales tot_environmental_cost, by(pledge_strong year)
-
-twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
-	   connected environmental_intensity_sales year if pledge_strong == 0, ///
-	   title("Clean Data, Unweighted") ///
-	   ytitle("") ///
-	   xtitle("") ///
-	   xlabel(2010 (1) 2019) ///
-	   xline(2016, lcolor(black)) ///
-	   plotregion(fcolor(white)) ///
-	   graphregion(color(white))	///
-	   legend(order(1 "Strong" 2 "Weak")) ///
-	   legend(region(color(white))) ///
-	   saving(sub_no_w, replace)
-	   
-grc1leg all_w.gph all_no_w.gph sub_w.gph sub_no_w.gph, ycommon
-graph export "$output/dd_init_plot.png", replace
-
+	graph export "$output/graph_`file'.png", replace
+}
+		   
 *Count of companies, countries 
 use "$prepped_data/sub1_unagg_all.dta", clear
 unique company

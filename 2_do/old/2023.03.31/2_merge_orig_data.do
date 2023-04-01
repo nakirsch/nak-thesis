@@ -50,13 +50,13 @@ drop _merge
 
 //Merge with country-level controls
 
-replace country = country_orig
-drop country_orig
-
 merge m:1 country year using "$temp/worldbank_ghg_long"
 tab country if _merge == 1
 keep if _merge == 1 | _merge == 3
 drop _merge
+
+replace country = country_orig
+drop country_orig
 
 merge m:1 country year using "$temp/worldbank_gdp_long"
 tab country if _merge == 1
