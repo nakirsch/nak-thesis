@@ -1,13 +1,13 @@
 ///Clean subsets of the data for analyses
 ///Created: February 25, 2023
-///Modified: March 26, 2023
+///Modified: April 1, 2023
 
 //Subsets for DD
 
-foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_neg_dropfirms.dta" /// 
-	"sub4_agg_all.dta" "sub5_agg_neg_dropobs.dta" "sub6_agg_neg_dropfirms.dta" {
+foreach file in "all_w" "all_unw" "nomiss_w" "nomiss_unw" "all_w_v1" "all_w_v2" ///
+	"all_unw_v1" "all_unw_v2" "nomiss_w_v1" "nomiss_w_v2" "nomiss_unw_v1" "nomiss_unw_v2" {
 		
-	use "$prepped_data/`file'", clear
+	use "$prepped_data/`file'.dta", clear
 	gen post = 0 
 	replace post = 1 if year > 2016
 	gen postxstrong = post * pledge_strong
@@ -22,36 +22,39 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 	label var gdp_percap "GDP per capita (USD)"
 	label var ln_gdp_percap "Natural log of GDP per capita (USD)"
 
-	save "$prepped_data/dd_`file'", replace
+	save "$prepped_data/dd_`file'.dta", replace
 }
 
 //Subsets for LPM
 
-use "$prepped_data/sub4_agg_all.dta", clear 
+foreach file in "all_w" "nomiss_w" "all_w_v1" "all_w_v2" "nomiss_w_v1" "nomiss_w_v2" {
+	
+	use "$prepped_data/`file'.dta", clear 
 
-*Subset the data to year of the Paris Agreement
-keep if year == 2015
+	*Subset the data to year of the Paris Agreement
+	keep if year == 2015
 
-gen ghg_percap = ghg/pop
-gen gdp_percap = gdp/pop
+	gen ghg_percap = ghg/pop
+	gen gdp_percap = gdp/pop
 
-gen ln_ghg_percap = ln(ghg_percap)
-gen ln_gdp_percap = ln(gdp_percap)
+	gen ln_ghg_percap = ln(ghg_percap)
+	gen ln_gdp_percap = ln(gdp_percap)
 
-label var pledge_strong "Strong pledge"
-label var ghg_percap "GHG emissions (kt of CO2 equivalent) per capita"
-label var gdp_percap "GDP per capita (USD)"
-label var ln_ghg_percap "Natural log of GHG emissions (kt of CO2 equivalent) per capita"
-label var ln_gdp_percap "Natural log of GDP per capita (USD)"
+	label var pledge_strong "Strong pledge"
+	label var ghg_percap "GHG emissions per capita (kt of CO2 equivalent)"
+	label var gdp_percap "GDP per capita (USD)"
+	label var ln_ghg_percap "Natural log of GHG emissions per capita (kt of CO2 equivalent)"
+	label var ln_gdp_percap "Natural log of GDP per capita (USD)"
 
-save "$prepped_data/lpm_sub4_agg_all.dta", replace
+	save "$prepped_data/lpm_`file'.dta", replace
+}
 
 //Subsets for FD
 
-foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_neg_dropfirms.dta" /// 
-	"sub4_agg_all.dta" "sub5_agg_neg_dropobs.dta" "sub6_agg_neg_dropfirms.dta" {
+foreach file in "all_w" "all_unw" "nomiss_w" "nomiss_unw" "all_w_v1" "all_w_v2" ///
+	"all_unw_v1" "all_unw_v2" "nomiss_w_v1" "nomiss_w_v2" "nomiss_unw_v1" "nomiss_unw_v2" {
 
-	use "$prepped_data/`file'", clear
+	use "$prepped_data/`file'.dta", clear
 	
 	gen gdp_percap = gdp/pop
 	gen ln_gdp_percap = ln(gdp_percap)
@@ -71,7 +74,8 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 	replace policy_level = 3 if ccpi_policy_overall == "medium"
 	replace policy_level = 4 if ccpi_policy_overall == "high"
 	
-	if ("`file'" == "sub1_unagg_all.dta") | ("`file'" == "sub2_unagg_neg_dropobs.dta")| ("`file'" == "sub3_unagg_neg_dropfirms.dta") {
+	if ("`file'" == "all_unw") | ("`file'" == "all_unw_v1") | ("`file'" == "all_unw_v2") | ///
+		("`file'" == "nomiss_unw") | ("`file'" == "nomiss_unw_v1") | ("`file'" == "nomiss_unw_v2") {
 		keep country company year environmental_intensity_sales policy_level eff_estimate ln_gdp_percap ln_pop
 		ren environmental_intensity_sales evintensity
 		reshape wide evintensity policy_level eff_estimate ln_gdp ln_pop, i(country company) j(year)
@@ -96,5 +100,5 @@ foreach file in "sub1_unagg_all.dta" "sub2_unagg_neg_dropobs.dta" "sub3_unagg_ne
 	label var ln_gdp_percap_dif "Δ Natural log of GDP per capita (USD)" 
 	label var ln_pop_dif "Δ Natural log of population"
 
-	save "$prepped_data/fd_`file'", replace
+	save "$prepped_data/fd_`file'.dta", replace
 }

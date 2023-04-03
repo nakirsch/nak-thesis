@@ -1,44 +1,35 @@
 ///Diff-in-diff to examine impact of pledges on firm-level intensity of production
 ///Created: February 3, 2023
-///Modified: February 25, 2023
+///Modified: April 1, 2023
 
-/*
-The Paris Agreement is a legally binding international treaty on climate change. It was adopted by 196 Parties at COP 21 in Paris, on 12 December 2015 and entered into force on 4 November 2016.
+//Main tables
 
-https://unfccc.int/process-and-meetings/the-paris-agreement/the-paris-agreement
+*Regression 1 - No controls, no fixed effects
+foreach file in "dd_all_unw" "dd_nomiss_unw" "dd_all_w" "dd_nomiss_w" {
 
-"This Agreement shall enter into force on the thirtieth day after the date on which at least 55
-Parties to the Convention accounting in total for at least an estimated 55 per cent of the total global
-greenhouse gas emissions have deposited their instruments of ratification, acceptance, approval or
-accession."
-
-https://treaties.un.org/doc/Publication/CN/2016/CN.735.2016-Eng.pdf
-*/
-
-/*
-Intensity = B0 + B1post + B2strong + B3post*strong
-		 + B4X (X = governance, GDP, pop)
-		(+ country fixed effects, year fixed effects)
-		 + Error
-*/
-
-foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3_unagg_neg_dropfirms.dta" /// 
-	"dd_sub4_agg_all.dta" "dd_sub5_agg_neg_dropobs.dta" "dd_sub6_agg_neg_dropfirms.dta" {
-
-	*Unaggregated version
-	use "$prepped_data/`file'", clear
-
-	*without controls
+	use "$prepped_data/`file'.dta", clear	
 	eststo: reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
+}
+esttab using "$output/dd_1.tex", label replace se r2 tex 
+eststo clear
 
-	*with controls 
+*Regression 2 - Controls, no fixed effects 
+foreach file in "dd_all_unw" "dd_nomiss_unw" "dd_all_w" "dd_nomiss_w" {
+
+	use "$prepped_data/`file'.dta", clear	
 	eststo: reg environmental_intensity_sales post pledge_strong postxstrong ///
 		eff_estimate ln_gdp_percap ln_pop, cluster(region)
+}
+esttab using "$output/dd_2.tex", label replace se r2 tex 
+eststo clear
 
-	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
-	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
+*Regression 3 - No controls, fixed effects 
+foreach file in "dd_all_unw" "dd_nomiss_unw" "dd_all_w" "dd_nomiss_w" {
+
+	use "$prepped_data/`file'.dta", clear	
 	
-		*fixed effects without controls
+	if ("`file'" == "dd_all_unw") | ("`file'" == "dd_nomiss_unw") {
+	
 		tostring year, replace
 		encode year, gen(yearcode)
 		order yearcode, a(year)
@@ -48,15 +39,10 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 
 		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			, a(companycode yearcode)
-
-		*fixed effects with controls 
-		eststo: reghdfe environmental_intensity_sales postxstrong ///
-			eff_estimate ln_gdp_percap ln_pop, a(companycode yearcode)
 	}
 	
 	else {
 		
-		*fixed effects without controls
 		tostring year, replace
 		encode year, gen(yearcode)
 		order yearcode, a(year)
@@ -66,36 +52,18 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 
 		eststo: reghdfe environmental_intensity_sales postxstrong ///
 			, a(countrycode yearcode)
-
-		*fixed effects with controls 
-		eststo: reghdfe environmental_intensity_sales postxstrong ///
-			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
 	}
-	
-	esttab using "$output/`file'.tex", label replace se r2 tex 
-	eststo clear
 }
+esttab using "$output/dd_3.tex", label replace se r2 tex 
+eststo clear
 
-/*
-	gen salesxpostxstrong = tot_sales * postxstrong
-		
-	reghdfe environmental_intensity_sales i.post##i.pledge_strong##c.tot_sales ///
-		, a(companycode yearcode)
+*Regression 4 - Controls, fixed effects 
+foreach file in "dd_all_unw" "dd_nomiss_unw" "dd_all_w" "dd_nomiss_w" {
 
-	marginsplot , xscale(log)
-*/
-
-*Save regressions for fixed effects with controls for all subsets
-foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3_unagg_neg_dropfirms.dta" /// 
-	"dd_sub4_agg_all.dta" "dd_sub5_agg_neg_dropobs.dta" "dd_sub6_agg_neg_dropfirms.dta" {
-
-	*Unaggregated version
-	use "$prepped_data/`file'", clear
-
-	if ("`file'" == "dd_sub1_unagg_all.dta") | ("`file'" == "dd_sub2_unagg_neg_dropobs.dta")| ///
-	("`file'" == "dd_sub3_unagg_neg_dropfirms.dta") {
+	use "$prepped_data/`file'.dta", clear	
 	
-		*fixed effects with controls 
+	if ("`file'" == "dd_all_unw") | ("`file'" == "dd_nomiss_unw") {
+	
 		tostring year, replace
 		encode year, gen(yearcode)
 		order yearcode, a(year)
@@ -109,7 +77,6 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 	
 	else {
 		
-		*fixed effects without controls
 		tostring year, replace
 		encode year, gen(yearcode)
 		order yearcode, a(year)
@@ -121,6 +88,187 @@ foreach file in "dd_sub1_unagg_all.dta" "dd_sub2_unagg_neg_dropobs.dta" "dd_sub3
 			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
 	}
 }
+esttab using "$output/dd_4.tex", label replace se r2 tex 
+eststo clear
+
+//Appendix tables 
+
+*V1 
+
+*Regression 1 - No controls, no fixed effects
+foreach file in "dd_all_unw_v1" "dd_nomiss_unw_v1" "dd_all_w_v1" "dd_nomiss_w_v1" {
 	
-	esttab using "$output/dd_main.tex", label replace se r2 tex
-	eststo clear
+	use "$prepped_data/`file'.dta", clear	
+	eststo: reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
+}
+esttab using "$output/dd_1_v1.tex", label replace se r2 tex 
+eststo clear
+
+
+*Regression 2 - Controls, no fixed effects 
+foreach file in "dd_all_unw_v1" "dd_nomiss_unw_v1" "dd_all_w_v1" "dd_nomiss_w_v1" {
+	
+	use "$prepped_data/`file'.dta", clear	
+	eststo: reg environmental_intensity_sales post pledge_strong postxstrong ///
+		eff_estimate ln_gdp_percap ln_pop, cluster(region)
+}
+esttab using "$output/dd_2_v1.tex", label replace se r2 tex 
+eststo clear
+
+*Regression 3 - No controls, fixed effects 
+foreach file in "dd_all_unw_v1" "dd_nomiss_unw_v1" "dd_all_w_v1" "dd_nomiss_w_v1" {
+
+	use "$prepped_data/`file'.dta", clear	
+	
+	if ("`file'" == "dd_all_unw_v1") | ("`file'" == "dd_nomiss_unw_v1") {
+	
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode company, gen(companycode)
+		order companycode, a(company)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			, a(companycode yearcode)
+	}
+	
+	else {
+		
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode country, gen(countrycode)
+		order countrycode, a(country)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			, a(countrycode yearcode)
+	}
+}
+esttab using "$output/dd_3_v1.tex", label replace se r2 tex 
+eststo clear
+
+*Regression 4 - Controls, fixed effects 
+foreach file in "dd_all_unw_v1" "dd_nomiss_unw_v1" "dd_all_w_v1" "dd_nomiss_w_v1" {
+
+	use "$prepped_data/`file'.dta", clear	
+	
+	if ("`file'" == "dd_all_unw_v1") | ("`file'" == "dd_nomiss_unw_v1") {
+	
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode company, gen(companycode)
+		order companycode, a(company)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			eff_estimate ln_gdp_percap ln_pop, a(companycode yearcode)
+	}
+	
+	else {
+		
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode country, gen(countrycode)
+		order countrycode, a(country)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
+	}
+}
+esttab using "$output/dd_4_v1.tex", label replace se r2 tex 
+eststo clear
+
+*V2
+
+*Regression 1 - No controls, no fixed effects
+foreach file in "dd_all_unw_v2" "dd_nomiss_unw_v2" "dd_all_w_v2" "dd_nomiss_w_v2" {
+	
+	use "$prepped_data/`file'.dta", clear	
+	eststo: reg environmental_intensity_sales post pledge_strong postxstrong, cluster(region)
+}
+esttab using "$output/dd_1_v2.tex", label replace se r2 tex 
+eststo clear
+
+
+*Regression 2 - Controls, no fixed effects 
+foreach file in "dd_all_unw_v2" "dd_nomiss_unw_v2" "dd_all_w_v2" "dd_nomiss_w_v2" {
+
+	use "$prepped_data/`file'.dta", clear	
+	eststo: reg environmental_intensity_sales post pledge_strong postxstrong ///
+		eff_estimate ln_gdp_percap ln_pop, cluster(region)
+}
+esttab using "$output/dd_2_v2.tex", label replace se r2 tex 
+eststo clear
+
+*Regression 3 - No controls, fixed effects 
+foreach file in "dd_all_unw_v2" "dd_nomiss_unw_v2" "dd_all_w_v2" "dd_nomiss_w_v2" {
+
+	use "$prepped_data/`file'.dta", clear	
+	
+	if ("`file'" == "dd_all_unw_v2") | ("`file'" == "dd_nomiss_unw_v2") {
+	
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode company, gen(companycode)
+		order companycode, a(company)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			, a(companycode yearcode)
+	}
+	
+	else {
+		
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode country, gen(countrycode)
+		order countrycode, a(country)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			, a(countrycode yearcode)
+	}
+}
+esttab using "$output/dd_3_v2.tex", label replace se r2 tex 
+eststo clear
+
+*Regression 4 - Controls, fixed effects 
+foreach file in "dd_all_unw_v2" "dd_nomiss_unw_v2" "dd_all_w_v2" "dd_nomiss_w_v2" {
+	
+	use "$prepped_data/`file'.dta", clear	
+	
+	if ("`file'" == "dd_all_unw_v2") | ("`file'" == "dd_nomiss_unw_v2") {
+	
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode company, gen(companycode)
+		order companycode, a(company)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			eff_estimate ln_gdp_percap ln_pop, a(companycode yearcode)
+	}
+	
+	else {
+		
+		tostring year, replace
+		encode year, gen(yearcode)
+		order yearcode, a(year)
+
+		encode country, gen(countrycode)
+		order countrycode, a(country)
+
+		eststo: reghdfe environmental_intensity_sales postxstrong ///
+			eff_estimate ln_gdp_percap ln_pop, a(countrycode yearcode)
+	}
+}
+esttab using "$output/dd_4_v2.tex", label replace se r2 tex 
+eststo clear
