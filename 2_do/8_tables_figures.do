@@ -218,3 +218,92 @@ orth_out environmental_intensity_sales eff_estimate ccpi_overall policy_level ln
 	using "$output/compare_all.xls", by(pledge_strong) replace overall se count compare test ///
 	title("Comparison of Values by Pledge Strength") 
 */
+
+*Calculate avg change in intensity
+
+use "$prepped_data/dd_all_unw", clear 
+bysort pledge_strong post: sum environmental_intensity_sales
+*Weak, pre: 0.162
+*Weak, post: 0.165
+*Strong, pre: 0.085
+*Strong, post: 0.090
+
+use "$prepped_data/dd_nomiss_unw", clear
+bysort pledge_strong post: sum environmental_intensity_sales
+*Weak, pre: 0.127
+*Weak, post: 0.121
+*Strong, pre: 0.090
+*Strong, post: 0.091
+
+use "$prepped_data/dd_all_w", clear
+bysort pledge_strong post: sum environmental_intensity_sales
+*Weak, pre: 0.177
+*Weak, post: 0.224
+*Strong, pre: 0.179
+*Strong, post: 0.134
+
+use "$prepped_data/dd_nomiss_w", clear 
+bysort pledge_strong post: sum environmental_intensity_sales
+*Weak, pre: 0.126
+*Weak, post: 0.152
+*Strong, pre: .125
+*Strong, post: .114
+
+use "$prepped_data/all_unw", clear 
+gen ln_tot_sales = ln(tot_sales)
+
+twoway (scatter environmental_intensity_sales ln_tot_sales) ///
+	(lfit environmental_intensity_sales ln_tot_sales), ///
+	title("All Data, Unweighted") ///
+	ytitle("Environmental intensity") ///
+	xtitle("") ///
+	xlabel(none) ///
+	legend(off) ///
+	graphregion(color(white)) ///
+	saving(all_unw, replace)
+
+use "$prepped_data/nomiss_unw", clear 
+gen ln_tot_sales = ln(tot_sales)
+
+twoway (scatter environmental_intensity_sales ln_tot_sales) ///
+	(lfit environmental_intensity_sales ln_tot_sales), ///
+	title("No Missing Data, Unweighted") ///
+	ytitle("") ///
+	xtitle("") ///
+	xlabel(none) ///
+	legend(off) ///
+	graphregion(color(white)) ///
+	saving(nomiss_unw, replace)
+	
+use "$prepped_data/all_w", clear 
+gen ln_tot_sales = ln(tot_sales)
+
+twoway (scatter environmental_intensity_sales ln_tot_sales) ///
+	(lfit environmental_intensity_sales ln_tot_sales), ///
+	title("All Data, Weighted") ///
+	ytitle("Environmental intensity") ///
+	xtitle("Natural log of total sales revenues (USD)") ///
+	legend(off) ///
+	graphregion(color(white)) ///
+	saving(all_w, replace)
+
+use "$prepped_data/nomiss_w", clear 
+gen ln_tot_sales = ln(tot_sales)
+
+twoway (scatter environmental_intensity_sales ln_tot_sales) ///
+	(lfit environmental_intensity_sales ln_tot_sales), ///
+	title("No Missing Data, Weighted") ///
+	ytitle("") ///
+	xtitle("Natural log of total sales revenues (USD)") ///
+	legend(off) ///
+	graphregion(color(white)) ///
+	saving(nomiss_w, replace)
+
+grc1leg all_unw.gph nomiss_unw.gph all_w.gph nomiss_w.gph, xcommon ycommon scheme(s1color)
+graph export "$output/intensity_v_sales.png", replace
+
+
+
+
+
+

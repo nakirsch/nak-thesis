@@ -4,9 +4,6 @@
 
 clear 
 
-///Install packages
-*ssc install (if needed)
-
 ///Set globals
 cd "/Users/nakirsch/Documents/Georgetown 2.1/Thesis/git/nak-thesis"
 global wd "/Users/nakirsch/Documents/Georgetown 2.1/Thesis/git/nak-thesis"
