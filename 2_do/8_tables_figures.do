@@ -73,7 +73,7 @@ collapse (mean) environmental_intensity_sales tot_environmental_cost, by(pledge_
 twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
 	   connected environmental_intensity_sales year if pledge_strong == 0, ///
 	   title("All Data, Unweighted") ///
-	   ytitle("Environmental Intensity") ///
+	   ytitle("Environmental intensity") ///
 	   xtitle("") ///
 	   xlabel(none) ///
 	   xline(2016, lcolor(black)) ///
@@ -108,7 +108,7 @@ gen environmental_intensity_sales = tot_environmental_cost/tot_sales
 twoway connected environmental_intensity_sales year if pledge_strong == 1 || ///
 	   connected environmental_intensity_sales year if pledge_strong == 0, ///
 	   title("All Data, Weighted") ///
-	   ytitle("Environmental Intensity") ///
+	   ytitle("Environmental intensity") ///
 	   xtitle("") ///
 	   xlabel(2010 (1) 2019) ///
 	   xline(2016, lcolor(black)) ///
